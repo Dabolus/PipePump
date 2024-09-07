@@ -89,7 +89,7 @@ public class RegistryManager
     //Dumb way to get identifier
     private static Identifier getIdentifier(String name)
     {
-        return new Identifier( PipeVacuumPumpMod.MOD_ID, name);
+        return Identifier.of( PipeVacuumPumpMod.MOD_ID, name);
     }
 
     //Dumb way to get name

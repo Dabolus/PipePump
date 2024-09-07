@@ -4,6 +4,7 @@ import alexiil.mc.mod.pipes.pipe.PartSpPipe;
 import alexiil.mc.mod.pipes.pipe.PipeSpBehaviourSided;
 import alexiil.mc.mod.pipes.pipe.PipeSpBehaviourWood;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,16 +42,16 @@ public abstract class PipeSpBehaviourWoodMixin extends PipeSpBehaviourSided {
 
     //save from tag
     @Override
-    public NbtCompound toNbt() {
-        NbtCompound nbt = super.toNbt();
+    public NbtCompound toNbt(RegistryWrapper.WrapperLookup lookup) {
+        NbtCompound nbt = super.toNbt(lookup);
         EngineConnector.saveToNbt(nbt);
         return nbt;
     }
 
     //load to tag
     @Override
-    public void fromNbt(NbtCompound nbt) {
-        super.fromNbt(nbt);
+    public void fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.fromNbt(nbt, lookup);
         EngineConnector.loadFromNbt(nbt);
     }
 

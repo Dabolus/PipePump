@@ -7,8 +7,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -93,9 +94,9 @@ public class MachinePipePumpBlock extends BlockMachineBase
     //make tooltip for block
     @Environment(EnvType.CLIENT)
     @Override
-    public void appendTooltip(ItemStack stack, BlockView worldIn, List<Text> tooltip, TooltipContext flagIn)
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options)
     {
-        super.appendTooltip(stack, worldIn, tooltip, flagIn);
+        super.appendTooltip(stack, context, tooltip, options);
         if(Screen.hasShiftDown())
         {
             tooltip.add(Text.translatable("pipe_vacuum_pump.tooltip.vacuum_pump_block").formatted(Formatting.GOLD));
@@ -111,9 +112,8 @@ public class MachinePipePumpBlock extends BlockMachineBase
                 Formatting.GOLD, getEnergyCost()).formatted(Formatting.GRAY));
     }
     @Override
-    public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn,
-							  Hand hand, BlockHitResult hitResult) {
-
+    public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, BlockHitResult hitResult)
+    {
 		ItemStack tool = playerIn.getStackInHand(Hand.MAIN_HAND);
 		if (!tool.isEmpty() && ToolManager.INSTANCE.canHandleTool(tool)) {
 			if (ToolManager.INSTANCE.handleTool(tool, pos, worldIn, playerIn, hitResult.getSide(), false)) {
