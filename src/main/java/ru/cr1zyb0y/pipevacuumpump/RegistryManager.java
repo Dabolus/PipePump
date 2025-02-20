@@ -26,6 +26,7 @@ public class RegistryManager
     public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER1;
     public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER2;
     public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER3;
+    public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER4;
 
     //Entity
     public static BlockEntityType<MachinePipePumpBlockEntity> PIPE_PUMP_BLOCK_ENTITY;
@@ -39,9 +40,10 @@ public class RegistryManager
     public static void Init()
     {
         //Create blocks
-        PIPE_PUMP_BLOCK_TIER1 = new MachinePipePumpBlock(1, 30);
-        PIPE_PUMP_BLOCK_TIER2 = new MachinePipePumpBlock(2, 20);
-        PIPE_PUMP_BLOCK_TIER3 = new MachinePipePumpBlock(4, 10);
+        PIPE_PUMP_BLOCK_TIER1 = new MachinePipePumpBlock(1, 24);
+        PIPE_PUMP_BLOCK_TIER2 = new MachinePipePumpBlock(4, 9);
+        PIPE_PUMP_BLOCK_TIER3 = new MachinePipePumpBlock(16, 3);
+        PIPE_PUMP_BLOCK_TIER4 = new MachinePipePumpBlock(64, 1);
 
         //Create item group
         PIPE_PUMP_GROUP = FabricItemGroup.builder()
@@ -59,11 +61,12 @@ public class RegistryManager
         registerBlockWithItem("vacuum_pump_block_tier1", PIPE_PUMP_BLOCK_TIER1);
         registerBlockWithItem("vacuum_pump_block_tier2", PIPE_PUMP_BLOCK_TIER2);
         registerBlockWithItem("vacuum_pump_block_tier3", PIPE_PUMP_BLOCK_TIER3);
+        registerBlockWithItem("vacuum_pump_block_tier4", PIPE_PUMP_BLOCK_TIER4);
 
         //Reg entity
         PIPE_PUMP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, getName("vacuum_pump"),
                 FabricBlockEntityTypeBuilder.create(MachinePipePumpBlockEntity::new,
-                        PIPE_PUMP_BLOCK_TIER1, PIPE_PUMP_BLOCK_TIER2, PIPE_PUMP_BLOCK_TIER3).build(null));
+                        PIPE_PUMP_BLOCK_TIER1, PIPE_PUMP_BLOCK_TIER2, PIPE_PUMP_BLOCK_TIER3, PIPE_PUMP_BLOCK_TIER4).build(null));
     }
 
     //Init client side effects
@@ -73,6 +76,7 @@ public class RegistryManager
         BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER1, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER2, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER3, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER4, RenderLayer.getCutout());
     }
 
     //Dumb way to register block with item

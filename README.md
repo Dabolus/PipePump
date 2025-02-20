@@ -25,27 +25,34 @@ Now you need to use Pipe Pump for using wood pipes, and that consume energy from
 ![Use triggers, bro](/docs/usage4.png)
 
 ## Crafting Recipes
-  
+
 **Pipe Pump - Tier 1**
 
-* Speed - Pop **1** item per **30** ticks
+* Speed - Pop **1** item per **24** ticks
 * Energy cost - **1** per tick
 
 ![Pipe Pump - Tier 1](/docs/tier_1.png)
 
-**Pipe Pump - Tier 2**
+**Pipe Pump - Tier 2 (Advanced Pipe Pump)**
 
-* Speed - Pop **1** item per **20** ticks
-* Energy cost - **2** per tick
+* Speed - Pop **1** item per **9** ticks
+* Energy cost - **4** per tick
 
 ![Pipe Pump - Tier 2](/docs/tier_2.png)
 
-**Pipe Pump - Tier 3**
+**Pipe Pump - Tier 3 (Industrial Pipe Pump)**
 
-* Speed - Pop **1** item per **10** ticks
-* Energy cost - **4** per tick
+* Speed - Pop **1** item per **3** ticks
+* Energy cost - **16** per tick
 
 ![Pipe Pump - Tier 3](/docs/tier_3.png)
+
+**Pipe Pump - Tier 4 (Quantum Pipe Pump)**
+
+* Speed - Pop **1** item per **1** tick
+* Energy cost - **64** per tick
+
+![Pipe Pump - Tier 4](/docs/tier_4.png)
 
 ## Plans
 
