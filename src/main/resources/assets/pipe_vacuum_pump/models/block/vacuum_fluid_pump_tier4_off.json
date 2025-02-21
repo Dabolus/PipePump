@@ -1,0 +1,8 @@
+{
+  "parent": "pipe_vacuum_pump:block/vacuum_pump_off",
+  "textures": {
+    "side": "pipe_vacuum_pump:block/pump_side_tier4",
+    "bottom": "pipe_vacuum_pump:block/pump_bottom_tier4",
+    "top": "pipe_vacuum_pump:block/pump_top_off_tier4"
+  }
+}

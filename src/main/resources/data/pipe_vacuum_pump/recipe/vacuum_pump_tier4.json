@@ -20,8 +20,7 @@
     }
   },
   "result": {
-    "item": "pipe_vacuum_pump:vacuum_pump_block_tier4",
+    "id": "pipe_vacuum_pump:vacuum_pump_block_tier4",
     "count": 1
   }
 }
-

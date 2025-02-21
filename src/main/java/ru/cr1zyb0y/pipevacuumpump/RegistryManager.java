@@ -16,7 +16,9 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import ru.cr1zyb0y.pipevacuumpump.blocks.MachineFluidPipePumpBlock;
 import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlock;
+import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachineFluidPipePumpBlockEntity;
 import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachinePipePumpBlockEntity;
 
 public class RegistryManager
@@ -26,9 +28,14 @@ public class RegistryManager
     public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER2;
     public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER3;
     public static MachinePipePumpBlock PIPE_PUMP_BLOCK_TIER4;
+    public static MachineFluidPipePumpBlock FLUID_PIPE_PUMP_BLOCK_TIER1;
+    public static MachineFluidPipePumpBlock FLUID_PIPE_PUMP_BLOCK_TIER2;
+    public static MachineFluidPipePumpBlock FLUID_PIPE_PUMP_BLOCK_TIER3;
+    public static MachineFluidPipePumpBlock FLUID_PIPE_PUMP_BLOCK_TIER4;
 
     //Entity
     public static BlockEntityType<MachinePipePumpBlockEntity> PIPE_PUMP_BLOCK_ENTITY;
+    public static BlockEntityType<MachineFluidPipePumpBlockEntity> FLUID_PIPE_PUMP_BLOCK_ENTITY;
 
     //ItemGroup
     public static ItemGroup PIPE_PUMP_GROUP;
@@ -43,6 +50,10 @@ public class RegistryManager
         PIPE_PUMP_BLOCK_TIER2 = new MachinePipePumpBlock(4, 9);
         PIPE_PUMP_BLOCK_TIER3 = new MachinePipePumpBlock(16, 3);
         PIPE_PUMP_BLOCK_TIER4 = new MachinePipePumpBlock(64, 1);
+        FLUID_PIPE_PUMP_BLOCK_TIER1 = new MachineFluidPipePumpBlock(1, 24);
+        FLUID_PIPE_PUMP_BLOCK_TIER2 = new MachineFluidPipePumpBlock(4, 9);
+        FLUID_PIPE_PUMP_BLOCK_TIER3 = new MachineFluidPipePumpBlock(16, 3);
+        FLUID_PIPE_PUMP_BLOCK_TIER4 = new MachineFluidPipePumpBlock(64, 1);
 
         //Create item group
         PIPE_PUMP_GROUP = FabricItemGroup.builder()
@@ -61,11 +72,18 @@ public class RegistryManager
         registerBlockWithItem("vacuum_pump_block_tier2", PIPE_PUMP_BLOCK_TIER2);
         registerBlockWithItem("vacuum_pump_block_tier3", PIPE_PUMP_BLOCK_TIER3);
         registerBlockWithItem("vacuum_pump_block_tier4", PIPE_PUMP_BLOCK_TIER4);
+        registerBlockWithItem("vacuum_fluid_pump_block_tier1", FLUID_PIPE_PUMP_BLOCK_TIER1);
+        registerBlockWithItem("vacuum_fluid_pump_block_tier2", FLUID_PIPE_PUMP_BLOCK_TIER2);
+        registerBlockWithItem("vacuum_fluid_pump_block_tier3", FLUID_PIPE_PUMP_BLOCK_TIER3);
+        registerBlockWithItem("vacuum_fluid_pump_block_tier4", FLUID_PIPE_PUMP_BLOCK_TIER4);
 
         //Reg entity
         PIPE_PUMP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, getName("vacuum_pump"),
                 BlockEntityType.Builder.create(MachinePipePumpBlockEntity::new,
                         PIPE_PUMP_BLOCK_TIER1, PIPE_PUMP_BLOCK_TIER2, PIPE_PUMP_BLOCK_TIER3, PIPE_PUMP_BLOCK_TIER4).build(null));
+        FLUID_PIPE_PUMP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, getName("vacuum_fluid_pump"),
+                BlockEntityType.Builder.create(MachineFluidPipePumpBlockEntity::new,
+                        FLUID_PIPE_PUMP_BLOCK_TIER1, FLUID_PIPE_PUMP_BLOCK_TIER2, FLUID_PIPE_PUMP_BLOCK_TIER3, FLUID_PIPE_PUMP_BLOCK_TIER4).build(null));
     }
 
     //Init client side effects
@@ -76,6 +94,10 @@ public class RegistryManager
         BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER2, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER3, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PIPE_PUMP_BLOCK_TIER4, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER1, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER2, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER3, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER4, RenderLayer.getCutout());
     }
 
     //Dumb way to register block with item

@@ -2,6 +2,7 @@ package ru.cr1zyb0y.pipevacuumpump.blocks;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.Screen;
@@ -11,13 +12,14 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
-import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachinePipePumpBlockEntity;
+
+import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachineFluidPipePumpBlockEntity;
 
 import java.util.List;
 
-public class MachinePipePumpBlock extends MachinePipePumpBlockBase
+public class MachineFluidPipePumpBlock extends MachinePipePumpBlockBase
 {
-    public MachinePipePumpBlock(int energyCost, int pumpSpeedTick)
+    public MachineFluidPipePumpBlock(int energyCost, int pumpSpeedTick)
     {
         super(energyCost, pumpSpeedTick);
     }
@@ -26,7 +28,7 @@ public class MachinePipePumpBlock extends MachinePipePumpBlockBase
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
     {
-        return new MachinePipePumpBlockEntity(pos, state);
+        return new MachineFluidPipePumpBlockEntity(pos, state);
     }
 
     // Make tooltip for block
@@ -37,7 +39,7 @@ public class MachinePipePumpBlock extends MachinePipePumpBlockBase
         super.appendTooltip(stack, context, tooltip, options);
         if(Screen.hasShiftDown())
         {
-            tooltip.add(Text.translatable("pipe_vacuum_pump.tooltip.vacuum_pump_block").formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable("pipe_vacuum_pump.tooltip.vacuum_fluid_pump_block").formatted(Formatting.GOLD));
         }
         else
         {

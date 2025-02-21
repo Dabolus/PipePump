@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "PMP",
+    "CFC"
+  ],
+  "key": {
+    "P": {
+      "item": "techreborn:electrum_plate"
+    },
+    "M": {
+      "item": "pipe_vacuum_pump:vacuum_pump_block_tier1"
+    },
+    "C": {
+      "item": "techreborn:advanced_circuit"
+    },
+    "F": {
+      "item": "techreborn:advanced_machine_frame"
+    }
+  },
+  "result": {
+    "id": "pipe_vacuum_pump:vacuum_pump_block_tier2",
+    "count": 1
+  }
+}

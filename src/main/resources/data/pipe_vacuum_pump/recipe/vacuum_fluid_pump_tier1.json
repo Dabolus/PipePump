@@ -10,7 +10,7 @@
       "item": "techreborn:refined_iron_plate"
     },
     "M": {
-      "item": "minecraft:piston"
+      "item": "simple_pipes:pump"
     },
     "C": {
       "item": "techreborn:electronic_circuit"
@@ -20,7 +20,7 @@
     }
   },
   "result": {
-    "item": "pipe_vacuum_pump:vacuum_pump_block_tier1",
+    "id": "pipe_vacuum_pump:vacuum_fluid_pump_block_tier1",
     "count": 1
   }
 }
