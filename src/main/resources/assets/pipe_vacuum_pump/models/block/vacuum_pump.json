@@ -3,9 +3,7 @@
     "particle": "#side",
     "tier_texture": "#side",
     "target": "#target",
-    "bottom": "pipe_vacuum_pump:block/pump_bottom",
-    "any_tier_texture": "pipe_vacuum_pump:block/pump_side_tier1",
-    "turned_off": "pipe_vacuum_pump:block/pump_top_main"
+    "bottom": "#bottom"
   },
   "display": {
     "thirdperson_righthand": {

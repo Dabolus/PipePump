@@ -2,18 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
-    "SSS",
-    "CMC"
+    "PMP",
+    "CFC"
   ],
   "key": {
-    "S": {
-      "item": "techreborn:iridium_alloy_plate"
+    "P": {
+      "item": "techreborn:tungsten_plate"
+    },
+    "M": {
+      "item": "pipe_vacuum_pump:vacuum_pump_block_tier3"
     },
     "C": {
       "item": "techreborn:energy_flow_chip"
     },
-    "M": {
-      "item": "pipe_vacuum_pump:vacuum_pump_block_tier3"
+    "F": {
+      "item": "techreborn:industrial_machine_frame"
     }
   },
   "result": {

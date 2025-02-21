@@ -26,7 +26,7 @@ Now you need to use Pipe Pump for using wood pipes, and that consume energy from
 
 ## Crafting Recipes
 
-**Pipe Pump - Tier 1**
+**Pipe Pump - Tier 1 (Basic Pipe Pump)**
 
 * Speed - Pop **1** item per **24** ticks
 * Energy cost - **1** per tick

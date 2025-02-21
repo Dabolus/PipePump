@@ -2,20 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
-    "IPI",
-    "CBC"
+    "PMP",
+    "CFC"
   ],
   "key": {
-    "I": {
-      "item": "techreborn:iron_plate"
+    "P": {
+      "item": "techreborn:refined_iron_plate"
+    },
+    "M": {
+      "item": "minecraft:piston"
     },
     "C": {
       "item": "techreborn:electronic_circuit"
     },
-    "P": {
-      "item": "minecraft:piston"
-    },
-    "B": {
+    "F": {
       "item": "techreborn:basic_machine_frame"
     }
   },

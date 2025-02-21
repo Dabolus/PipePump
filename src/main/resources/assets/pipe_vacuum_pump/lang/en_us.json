@@ -1,7 +1,7 @@
 {
   "itemGroup.pipe_vacuum_pump.main": "PipePump",
-  "block.pipe_vacuum_pump.vacuum_pump_block_tier1": "Pipe Pump",
-  "item.pipe_vacuum_pump.vacuum_pump_block_tier1": "Pipe Pump",
+  "block.pipe_vacuum_pump.vacuum_pump_block_tier1": "Basic Pipe Pump",
+  "item.pipe_vacuum_pump.vacuum_pump_block_tier1": "Basic Pipe Pump",
   "block.pipe_vacuum_pump.vacuum_pump_block_tier2": "Advanced Pipe Pump",
   "item.pipe_vacuum_pump.vacuum_pump_block_tier2": "Advanced Pipe Pump",
   "block.pipe_vacuum_pump.vacuum_pump_block_tier3": "Industrial Pipe Pump",
