@@ -9,11 +9,19 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlock;
+import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlockBase;
 
 import java.util.*;
 
 public class PartSpPipeEngineConnector
 {
+    public enum AllowedExtraction {
+        NONE,
+        ITEMS,
+        FLUIDS,
+        ITEMS_FLUIDS,
+    }
+
     private BlockPos _pipeEnginePos;
     private int _lastTick;
 
@@ -50,10 +58,10 @@ public class PartSpPipeEngineConnector
                 BlockPos enginePos = pipePos.offset(dir);
                 BlockState engineState = world.getBlockState(enginePos);
                 Block engineBlockN = engineState.getBlock();
-                if(engineBlockN instanceof MachinePipePumpBlock)
+                if(engineBlockN instanceof MachinePipePumpBlockBase)
                 {
                     //get facing direction
-                    Direction facingDirection = ((MachinePipePumpBlock) engineBlockN).getFacing(engineState);
+                    Direction facingDirection = ((MachinePipePumpBlockBase) engineBlockN).getFacing(engineState);
 
                     //check is block faced to pipe
                     BlockPos facedBlockPos = enginePos.offset(facingDirection);
@@ -68,16 +76,15 @@ public class PartSpPipeEngineConnector
     }
 
     //check is we allow extraction
-    public boolean isCanExtract(World world)
+    public AllowedExtraction canExtract(World world)
     {
         if(_pipeEnginePos != null && world != null)
         {
             BlockState state = world.getBlockState(_pipeEnginePos);
             Block block = state.getBlock();
 
-            if (block instanceof MachinePipePumpBlock)
+            if (block instanceof MachinePipePumpBlockBase engineBlock)
             {
-                MachinePipePumpBlock engineBlock = (MachinePipePumpBlock) block;
 
                 if(engineBlock.isActive(state))
                 {
@@ -86,7 +93,7 @@ public class PartSpPipeEngineConnector
                     if(_lastTick >= engineBlock.getEngineTickSpeed())
                     {
                         _lastTick = 0;
-                        return true;
+                        return engineBlock instanceof MachinePipePumpBlock ? AllowedExtraction.ITEMS : AllowedExtraction.FLUIDS;
                     }
                 }
             }
@@ -97,7 +104,7 @@ public class PartSpPipeEngineConnector
             }
         }
 
-        return false;
+        return AllowedExtraction.NONE;
     }
 
     //save connector data to nbt tag

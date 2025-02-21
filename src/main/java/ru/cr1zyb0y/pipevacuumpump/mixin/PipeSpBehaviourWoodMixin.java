@@ -3,6 +3,7 @@ package ru.cr1zyb0y.pipevacuumpump.mixin;
 import alexiil.mc.mod.pipes.pipe.PartSpPipe;
 import alexiil.mc.mod.pipes.pipe.PipeSpBehaviourSided;
 import alexiil.mc.mod.pipes.pipe.PipeSpBehaviourWood;
+import alexiil.mc.mod.pipes.pipe.PipeSpFlowItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.Direction;
@@ -19,6 +20,7 @@ import ru.cr1zyb0y.pipevacuumpump.common.PartSpPipeEngineConnector;
 public abstract class PipeSpBehaviourWoodMixin extends PipeSpBehaviourSided {
 
     @Shadow public abstract void tryExtractItems(Direction dir, int count);
+    @Shadow public abstract void tryExtractFluids(Direction dir);
 
     //engine connector class
     @Unique
@@ -72,9 +74,18 @@ public abstract class PipeSpBehaviourWoodMixin extends PipeSpBehaviourSided {
         }
 
         //now need check all things
-        if (EngineConnector.isCanExtract(world)) {
-            tryExtractItems(dir, 1);
-            return;
+        PartSpPipeEngineConnector.AllowedExtraction allowedExtraction = EngineConnector.canExtract(world);
+        switch (allowedExtraction) {
+            case ITEMS:
+                tryExtractItems(dir, 1);
+                break;
+            case FLUIDS:
+                tryExtractFluids(dir);
+                break;
+            case ITEMS_FLUIDS: // currently we have no blocks that support both
+            default:
+                // no-op
+                break;
         }
     }
 }

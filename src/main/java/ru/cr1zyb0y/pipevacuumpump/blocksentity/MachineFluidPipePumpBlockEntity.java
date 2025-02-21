@@ -1,5 +1,12 @@
 package ru.cr1zyb0y.pipevacuumpump.blocksentity;
 
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.fluid.FluidAttributes;
+import alexiil.mc.lib.attributes.fluid.FluidInsertable;
+import alexiil.mc.lib.attributes.fluid.FluidVolumeUtil;
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
+import alexiil.mc.lib.attributes.fluid.world.FluidWorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -12,6 +19,8 @@ import ru.cr1zyb0y.pipevacuumpump.blocks.MachineFluidPipePumpBlock;
 
 public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity
 {
+    private FluidVolume storedFluid = FluidVolumeUtil.EMPTY;
+
     private MachineFluidPipePumpBlock _machinePipeFluidPump;
 
     public MachineFluidPipePumpBlockEntity(BlockPos pos, BlockState state)
@@ -30,42 +39,60 @@ public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity
     {
         super.tick(world, pos, state, blockEntity);
 
-        if (world == null || world.isClient)
+        if (world == null || world.isClient || this._machinePipeFluidPump == null)
         {
             return;
         }
 
-        if (this._machinePipeFluidPump != null)
+        boolean isActive = this._machinePipeFluidPump.isActive(state);
+
+        //Redstone signal turn off engine
+        if(world.isReceivingRedstonePower(getPos()))
         {
-            boolean isActive = this._machinePipeFluidPump.isActive(state);
-
-            //Redstone signal turn off engine
-            if(world.isReceivingRedstonePower(getPos()))
-            {
-                if(isActive)
-                {
-                    this._machinePipeFluidPump.setActive(false, world, pos);
-                }
-
-                return;
-            }
-
-            //Consume energy
-            int _energyCost = this._machinePipeFluidPump.getEnergyCost();
-            long energyCost = getEuPerTick(_energyCost);
-            if (getEnergy() > energyCost)
-            {
-                useEnergy(getEuPerTick(energyCost));
-
-                if (!isActive)
-                {
-                    this._machinePipeFluidPump.setActive(true, world, pos);
-                }
-            }
-            else if (isActive)
+            if(isActive)
             {
                 this._machinePipeFluidPump.setActive(false, world, pos);
             }
+
+            return;
+        }
+
+        //Consume energy
+        int _energyCost = this._machinePipeFluidPump.getEnergyCost();
+        long energyCost = getEuPerTick(_energyCost);
+        if (getEnergy() > energyCost)
+        {
+            useEnergy(getEuPerTick(energyCost));
+
+            if (!isActive)
+            {
+                this._machinePipeFluidPump.setActive(true, world, pos);
+            }
+        }
+        else if (isActive)
+        {
+            this._machinePipeFluidPump.setActive(false, world, pos);
+        }
+
+        // No energy: do not try to extract fluid
+        if (!isActive)
+        {
+            return;
+        }
+
+        Direction facing = state.get(MachineFluidPipePumpBlock.FACING);
+        if (!storedFluid.isEmpty())
+        {
+            FluidInsertable insertable = FluidAttributes.INSERTABLE.get(getWorld(), getPos().offset(facing), SearchOptions.inDirection(facing));
+            storedFluid = insertable.attemptInsertion(storedFluid, Simulation.ACTION);
+            if (!storedFluid.isEmpty()) {
+                return;
+            }
+        }
+        Direction oppositeDirection = facing.getOpposite();
+        FluidVolume drained = FluidWorldUtil.drain(getWorld(), getPos().offset(oppositeDirection), Simulation.ACTION);
+        if (!drained.isEmpty()) {
+            storedFluid = drained;
         }
     }
 

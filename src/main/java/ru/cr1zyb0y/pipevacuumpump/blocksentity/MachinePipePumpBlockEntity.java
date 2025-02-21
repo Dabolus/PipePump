@@ -32,42 +32,39 @@ public class MachinePipePumpBlockEntity extends PowerAcceptorBlockEntity
     {
         super.tick(world, pos, state, blockEntity);
 
-        if (world == null || world.isClient)
+        if (world == null || world.isClient || this._machinePipePump == null)
         {
             return;
         }
 
-        if (this._machinePipePump != null)
+        boolean isActive = this._machinePipePump.isActive(state);
+
+        //Redstone signal turn off engine
+        if(world.isReceivingRedstonePower(getPos()))
         {
-            boolean isActive = this._machinePipePump.isActive(state);
-
-            //Redstone signal turn off engine
-            if(world.isReceivingRedstonePower(getPos()))
-            {
-                if(isActive)
-                {
-                    this._machinePipePump.setActive(false, world, pos);
-                }
-
-                return;
-            }
-
-            //Consume energy
-            int _energyCost = this._machinePipePump.getEnergyCost();
-            long energyCost = getEuPerTick(_energyCost);
-            if (getEnergy() > energyCost)
-            {
-                useEnergy(getEuPerTick(energyCost));
-
-                if (!isActive)
-                {
-                    this._machinePipePump.setActive(true, world, pos);
-                }
-            }
-            else if (isActive)
+            if(isActive)
             {
                 this._machinePipePump.setActive(false, world, pos);
             }
+
+            return;
+        }
+
+        //Consume energy
+        int _energyCost = this._machinePipePump.getEnergyCost();
+        long energyCost = getEuPerTick(_energyCost);
+        if (getEnergy() > energyCost)
+        {
+            useEnergy(getEuPerTick(energyCost));
+
+            if (!isActive)
+            {
+                this._machinePipePump.setActive(true, world, pos);
+            }
+        }
+        else if (isActive)
+        {
+            this._machinePipePump.setActive(false, world, pos);
         }
     }
 
