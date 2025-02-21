@@ -84,7 +84,6 @@ public class MachinePipePumpBlock extends BlockMachineBase
     }
 
     //make block valid view
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ctx)
     {

@@ -3,7 +3,6 @@ package ru.cr1zyb0y.pipevacuumpump;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
@@ -65,7 +64,7 @@ public class RegistryManager
 
         //Reg entity
         PIPE_PUMP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, getName("vacuum_pump"),
-                FabricBlockEntityTypeBuilder.create(MachinePipePumpBlockEntity::new,
+                BlockEntityType.Builder.create(MachinePipePumpBlockEntity::new,
                         PIPE_PUMP_BLOCK_TIER1, PIPE_PUMP_BLOCK_TIER2, PIPE_PUMP_BLOCK_TIER3, PIPE_PUMP_BLOCK_TIER4).build(null));
     }
 
