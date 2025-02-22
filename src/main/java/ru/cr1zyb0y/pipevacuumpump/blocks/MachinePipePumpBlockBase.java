@@ -125,9 +125,7 @@ public class MachinePipePumpBlockBase extends BlockMachineBase
     @Override
     public void onPlaced(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.onPlaced(worldIn, pos, state, placer, stack);
-        // Place the pump in the direction the player is looking at, similarly to
-        // how hoppers are placed, to make it easier to place it attached to a pipe
-        setFacing(placer.getFacing(), worldIn, pos);
+        setFacing(placer.getFacing().getOpposite(), worldIn, pos);
     }
 
     @Override

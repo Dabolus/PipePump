@@ -12,12 +12,17 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
+import alexiil.mc.lib.attributes.AttributeList;
+import alexiil.mc.lib.attributes.AttributeProvider;
+import alexiil.mc.lib.attributes.fluid.impl.EmptyFluidExtractable;
 import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachineFluidPipePumpBlockEntity;
 
 import java.util.List;
 
-public class MachineFluidPipePumpBlock extends MachinePipePumpBlockBase
+public class MachineFluidPipePumpBlock extends MachinePipePumpBlockBase implements AttributeProvider
 {
     public MachineFluidPipePumpBlock(int energyCost, int pumpSpeedTick)
     {
@@ -50,5 +55,13 @@ public class MachineFluidPipePumpBlock extends MachinePipePumpBlockBase
                 Formatting.GOLD, "1", getEngineTickSpeed()).formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("pipe_vacuum_pump.tooltip.consumption",
                 Formatting.GOLD, getEnergyCost()).formatted(Formatting.GRAY));
+    }
+
+    @Override
+    public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> to) {
+        Direction facing = state.get(FACING);
+        if (to.getSearchDirection() == facing) {
+            to.offer(EmptyFluidExtractable.SUPPLIER);
+        }
     }
 }

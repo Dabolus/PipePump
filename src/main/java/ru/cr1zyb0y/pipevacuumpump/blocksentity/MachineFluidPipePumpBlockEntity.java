@@ -9,6 +9,8 @@ import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import alexiil.mc.lib.attributes.fluid.world.FluidWorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -114,4 +116,18 @@ public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity
     // we are not generating energy
     @Override
     public boolean canProvideEnergy(final Direction direction) { return false; }
+
+
+    @Override
+    public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
+        super.readNbt(tag, lookup);
+        storedFluid = FluidVolume.fromTag(tag.getCompound("fluid"));
+    }
+
+    @Override
+    public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
+        super.writeNbt(tag, lookup);
+        tag.put("fluid", storedFluid.toTag());
+    }
+
 }
