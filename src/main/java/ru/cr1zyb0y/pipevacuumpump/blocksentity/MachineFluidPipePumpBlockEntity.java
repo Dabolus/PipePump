@@ -65,7 +65,7 @@ public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity
         long energyCost = getEuPerTick(_energyCost);
         if (getEnergy() > energyCost)
         {
-            useEnergy(getEuPerTick(energyCost));
+            useEnergy(energyCost);
 
             if (!isActive)
             {
