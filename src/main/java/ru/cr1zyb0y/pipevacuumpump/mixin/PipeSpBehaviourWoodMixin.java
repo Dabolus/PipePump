@@ -1,9 +1,6 @@
 package ru.cr1zyb0y.pipevacuumpump.mixin;
 
-import alexiil.mc.mod.pipes.pipe.PartSpPipe;
-import alexiil.mc.mod.pipes.pipe.PipeSpBehaviourSided;
-import alexiil.mc.mod.pipes.pipe.PipeSpBehaviourWood;
-import alexiil.mc.mod.pipes.pipe.PipeSpFlowItem;
+import alexiil.mc.mod.pipes.pipe.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.Direction;

@@ -1,5 +1,6 @@
 package ru.cr1zyb0y.pipevacuumpump.blocksentity;
 
+import alexiil.mc.lib.attributes.CombinableAttribute;
 import alexiil.mc.lib.attributes.SearchOptions;
 import alexiil.mc.lib.attributes.Simulation;
 import alexiil.mc.lib.attributes.fluid.FluidAttributes;
@@ -83,19 +84,21 @@ public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity
         }
 
         Direction facing = state.get(MachineFluidPipePumpBlock.FACING);
-        if (!storedFluid.isEmpty())
-        {
-            FluidInsertable insertable = FluidAttributes.INSERTABLE.get(getWorld(), getPos().offset(facing), SearchOptions.inDirection(facing));
+        if (!storedFluid.isEmpty()) {
+            FluidInsertable insertable = getNeighbourAttribute(FluidAttributes.INSERTABLE, facing.getOpposite());
             storedFluid = insertable.attemptInsertion(storedFluid, Simulation.ACTION);
             if (!storedFluid.isEmpty()) {
                 return;
             }
         }
-        Direction oppositeDirection = facing.getOpposite();
-        FluidVolume drained = FluidWorldUtil.drain(getWorld(), getPos().offset(oppositeDirection), Simulation.ACTION);
+        FluidVolume drained = FluidWorldUtil.drain(getWorld(), getPos().offset(facing), Simulation.ACTION);
         if (!drained.isEmpty()) {
             storedFluid = drained;
         }
+    }
+
+    public <T> T getNeighbourAttribute(CombinableAttribute<T> attr, Direction dir) {
+        return attr.get(getWorld(), getPos().offset(dir), SearchOptions.inDirection(dir));
     }
 
     // this is capacity
