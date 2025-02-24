@@ -2,6 +2,8 @@ package ru.cr1zyb0y.pipevacuumpump.blocksentity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -9,10 +11,13 @@ import net.minecraft.world.World;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
 import reborncore.common.powerSystem.PowerAcceptorBlockEntity;
 
+import reborncore.common.screen.BuiltScreenHandler;
+import reborncore.common.screen.BuiltScreenHandlerProvider;
+import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import ru.cr1zyb0y.pipevacuumpump.RegistryManager;
 import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlock;
 
-public class MachinePipePumpBlockEntity extends PowerAcceptorBlockEntity
+public class MachinePipePumpBlockEntity extends PowerAcceptorBlockEntity implements BuiltScreenHandlerProvider
 {
     private MachinePipePumpBlock _machinePipePump;
 
@@ -86,4 +91,12 @@ public class MachinePipePumpBlockEntity extends PowerAcceptorBlockEntity
     // we are not generating energy
     @Override
     public boolean canProvideEnergy(final Direction direction) { return false; }
+
+    @Override
+    public BuiltScreenHandler createScreenHandler(int syncID, final PlayerEntity player) {
+        return new ScreenHandlerBuilder("machine_pipe_pump").player(player.getInventory()).inventory().hotbar().addInventory()
+                .blockEntity(this).slot(0, 84, 43).energySlot(7, 8, 72)
+                .syncEnergyValue().sync(PacketCodecs.VAR_LONG, this::getBaseMaxPower, /* no-op */ v -> {})
+                .addInventory().create(this, syncID);
+    }
 }

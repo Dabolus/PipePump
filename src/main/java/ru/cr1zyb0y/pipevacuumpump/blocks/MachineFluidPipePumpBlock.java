@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import alexiil.mc.lib.attributes.AttributeList;
 import alexiil.mc.lib.attributes.AttributeProvider;
 import alexiil.mc.lib.attributes.fluid.impl.EmptyFluidExtractable;
+import reborncore.api.blockentity.IMachineGuiHandler;
+import ru.cr1zyb0y.pipevacuumpump.blocksentity.GuiType;
 import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachineFluidPipePumpBlockEntity;
 
 import java.util.List;
@@ -63,5 +65,11 @@ public class MachineFluidPipePumpBlock extends MachinePipePumpBlockBase implemen
         if (to.getSearchDirection() == facing) {
             to.offer(EmptyFluidExtractable.SUPPLIER);
         }
+    }
+
+    @Override
+    public IMachineGuiHandler getGui()
+    {
+        return GuiType.MACHINE_FLUID_PIPE_PUMP;
     }
 }

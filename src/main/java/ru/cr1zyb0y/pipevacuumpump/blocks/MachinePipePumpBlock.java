@@ -11,6 +11,9 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+
+import reborncore.api.blockentity.IMachineGuiHandler;
+import ru.cr1zyb0y.pipevacuumpump.blocksentity.GuiType;
 import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachinePipePumpBlockEntity;
 
 import java.util.List;
@@ -48,5 +51,11 @@ public class MachinePipePumpBlock extends MachinePipePumpBlockBase
                 Formatting.GOLD, "1", getEngineTickSpeed()).formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("pipe_vacuum_pump.tooltip.consumption",
                 Formatting.GOLD, getEnergyCost()).formatted(Formatting.GRAY));
+    }
+
+    @Override
+    public IMachineGuiHandler getGui()
+    {
+        return GuiType.MACHINE_PIPE_PUMP;
     }
 }

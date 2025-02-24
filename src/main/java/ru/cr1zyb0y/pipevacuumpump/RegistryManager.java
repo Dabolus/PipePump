@@ -3,7 +3,6 @@ package ru.cr1zyb0y.pipevacuumpump;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
@@ -16,10 +15,14 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import reborncore.common.blocks.BlockMachineBase;
 import ru.cr1zyb0y.pipevacuumpump.blocks.MachineFluidPipePumpBlock;
 import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlock;
+import ru.cr1zyb0y.pipevacuumpump.blocksentity.GuiType;
 import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachineFluidPipePumpBlockEntity;
 import ru.cr1zyb0y.pipevacuumpump.blocksentity.MachinePipePumpBlockEntity;
+import ru.cr1zyb0y.pipevacuumpump.client.ClientGuiType;
 
 public class RegistryManager
 {
@@ -84,6 +87,8 @@ public class RegistryManager
         FLUID_PIPE_PUMP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, getName("vacuum_fluid_pump"),
                 BlockEntityType.Builder.create(MachineFluidPipePumpBlockEntity::new,
                         FLUID_PIPE_PUMP_BLOCK_TIER1, FLUID_PIPE_PUMP_BLOCK_TIER2, FLUID_PIPE_PUMP_BLOCK_TIER3, FLUID_PIPE_PUMP_BLOCK_TIER4).build(null));
+        GuiType.MACHINE_PIPE_PUMP.getIdentifier();
+        GuiType.MACHINE_FLUID_PIPE_PUMP.getIdentifier();
     }
 
     //Init client side effects
@@ -98,10 +103,12 @@ public class RegistryManager
         BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER2, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER3, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(FLUID_PIPE_PUMP_BLOCK_TIER4, RenderLayer.getCutout());
+        ClientGuiType.MACHINE_PIPE_PUMP.toString();
+        ClientGuiType.MACHINE_FLUID_PIPE_PUMP.toString();
     }
 
     //Dumb way to register block with item
-    private static void registerBlockWithItem(String name, Block block)
+    private static void registerBlockWithItem(String name, BlockMachineBase block)
     {
         Identifier identity = getIdentifier(name);
         Registry.register(Registries.BLOCK, identity, block);
