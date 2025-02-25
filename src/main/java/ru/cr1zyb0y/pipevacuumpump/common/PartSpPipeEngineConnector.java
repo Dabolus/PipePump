@@ -15,15 +15,7 @@ import java.util.*;
 
 public class PartSpPipeEngineConnector
 {
-    public enum AllowedExtraction {
-        NONE,
-        ITEMS,
-        FLUIDS,
-        ITEMS_FLUIDS,
-    }
-
     private BlockPos _pipeEnginePos;
-    private int _lastTick;
 
     public static Map<PartSpPipe, PartSpPipeEngineConnector> tmpMap = new HashMap<>();
 
@@ -48,7 +40,7 @@ public class PartSpPipeEngineConnector
     {
         if(pipePos != null && world != null && _pipeEnginePos == null)
         {
-            //get all directions
+            // Get all directions
             List<Direction> dirs = new ArrayList<>();
             Collections.addAll(dirs, Direction.values());
 
@@ -73,38 +65,6 @@ public class PartSpPipeEngineConnector
                 }
             }
         }
-    }
-
-    //check is we allow extraction
-    public AllowedExtraction canExtract(World world)
-    {
-        if(_pipeEnginePos != null && world != null)
-        {
-            BlockState state = world.getBlockState(_pipeEnginePos);
-            Block block = state.getBlock();
-
-            if (block instanceof MachinePipePumpBlockBase engineBlock)
-            {
-
-                if(engineBlock.isActive(state))
-                {
-                    _lastTick++; //wait ticks before go
-
-                    if(_lastTick >= engineBlock.getEngineTickSpeed())
-                    {
-                        _lastTick = 0;
-                        return engineBlock instanceof MachinePipePumpBlock ? AllowedExtraction.ITEMS : AllowedExtraction.FLUIDS;
-                    }
-                }
-            }
-            else
-            {
-                //set pos to null - disconnect
-                _pipeEnginePos = null;
-            }
-        }
-
-        return AllowedExtraction.NONE;
     }
 
     //save connector data to nbt tag

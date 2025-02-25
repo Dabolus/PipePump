@@ -33,12 +33,14 @@ import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.Tank;
 import ru.cr1zyb0y.pipevacuumpump.RegistryManager;
 import ru.cr1zyb0y.pipevacuumpump.blocks.MachineFluidPipePumpBlock;
+import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlock;
 import techreborn.blockentity.machine.multiblock.IndustrialGrinderBlockEntity;
 
 public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity implements BuiltScreenHandlerProvider
 {
     private FluidVolume storedFluid = FluidVolumeUtil.EMPTY;
     public final Tank tank;
+    private int _lastTick;
 
     private void syncTankContent() {
         Fluid fluid = storedFluid.getRawFluid();
@@ -107,6 +109,14 @@ public class MachineFluidPipePumpBlockEntity extends PowerAcceptorBlockEntity im
         {
             return;
         }
+
+        // Wait ticks based on machine tier before extracting fluid
+        _lastTick++;
+        if(_lastTick < this._machinePipeFluidPump.getEngineTickSpeed())
+        {
+            return;
+        }
+        _lastTick = 0;
 
         Direction facing = state.get(MachineFluidPipePumpBlock.FACING);
         if (!storedFluid.isEmpty()) {

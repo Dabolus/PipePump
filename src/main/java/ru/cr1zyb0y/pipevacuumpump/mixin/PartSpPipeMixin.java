@@ -33,10 +33,13 @@ public abstract class PartSpPipeMixin {
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
     public void init(PipeSpDef definition, MultipartHolder holder, CallbackInfo ci) {
 
-        if (PartSpPipeEngineConnector.contains((PartSpPipe) (Object) this)) {
+        if (PartSpPipeEngineConnector.contains((PartSpPipe) (Object) this))
+        {
             //get and remove
             EngineConnector = PartSpPipeEngineConnector.remove((PartSpPipe) (Object) this);
-        } else {
+        }
+        else
+        {
             EngineConnector = new PartSpPipeEngineConnector();
             PartSpPipeEngineConnector.add((PartSpPipe) (Object) this, EngineConnector);
         }
@@ -46,6 +49,8 @@ public abstract class PartSpPipeMixin {
     @Inject(method = "updateConnections", at = @At("TAIL"), remap = false)
     public void updateConnections(CallbackInfo ci) {
         if (behaviour instanceof PipeSpBehaviourWood)
+        {
             EngineConnector.findEngine(getPipePos(), getPipeWorld());
+        }
     }
 }

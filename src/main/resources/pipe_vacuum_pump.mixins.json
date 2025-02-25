@@ -2,10 +2,7 @@
   "required": true,
   "package": "ru.cr1zyb0y.pipevacuumpump.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "PartSpPipeMixin",
-    "PipeSpBehaviourWoodMixin"
-  ],
+  "mixins": ["PartSpPipeMixin"],
   "client": [],
   "server": [],
   "injectors": {

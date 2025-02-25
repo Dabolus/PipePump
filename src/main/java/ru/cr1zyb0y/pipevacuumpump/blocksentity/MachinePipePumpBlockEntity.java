@@ -3,11 +3,19 @@ package ru.cr1zyb0y.pipevacuumpump.blocksentity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 import net.minecraft.world.World;
+
+import alexiil.mc.lib.attributes.CombinableAttribute;
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.item.ItemAttributes;
+import alexiil.mc.lib.attributes.item.ItemExtractable;
+import alexiil.mc.lib.attributes.item.ItemInsertable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
 import reborncore.common.powerSystem.PowerAcceptorBlockEntity;
 
@@ -19,6 +27,9 @@ import ru.cr1zyb0y.pipevacuumpump.blocks.MachinePipePumpBlock;
 
 public class MachinePipePumpBlockEntity extends PowerAcceptorBlockEntity implements BuiltScreenHandlerProvider
 {
+    private ItemStack storedItems = ItemStack.EMPTY;
+    private int _lastTick;
+
     private MachinePipePumpBlock _machinePipePump;
 
     public MachinePipePumpBlockEntity(BlockPos pos, BlockState state)
@@ -71,7 +82,40 @@ public class MachinePipePumpBlockEntity extends PowerAcceptorBlockEntity impleme
         {
             this._machinePipePump.setActive(false, world, pos);
         }
+
+        // No energy: do not try to extract items
+        if (!isActive)
+        {
+            return;
+        }
+
+        // Wait ticks based on machine tier before extracting items
+        _lastTick++;
+        if(_lastTick < this._machinePipePump.getEngineTickSpeed())
+        {
+            return;
+        }
+        _lastTick = 0;
+
+        Direction facing = state.get(MachinePipePumpBlock.FACING);
+        if (!storedItems.isEmpty()) {
+            ItemInsertable insertable = getNeighbourAttribute(ItemAttributes.INSERTABLE, facing.getOpposite());
+            storedItems = insertable.attemptInsertion(storedItems, Simulation.ACTION);
+            if (!storedItems.isEmpty()) {
+                return;
+            }
+        }
+        ItemExtractable extractable = getNeighbourAttribute(ItemAttributes.EXTRACTABLE, facing);
+        ItemStack extracted = extractable.attemptAnyExtraction(1, Simulation.ACTION);
+        if (!extracted.isEmpty()) {
+            storedItems = extracted;
+        }
     }
+
+    public <T> T getNeighbourAttribute(CombinableAttribute<T> attr, Direction dir) {
+        return attr.get(getWorld(), getPos().offset(dir), SearchOptions.inDirection(dir));
+    }
+
 
     // this is capacity
     @Override
